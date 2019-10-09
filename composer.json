@@ -1,0 +1,24 @@
+{
+    "name": "payone/auto-cc-detection-example",
+    "description": "Example implementation of PAY/ONE Client API auto credit card type detection.",
+    "type": "project",
+    "keywords": ["payone", "credit card", "auto detection"],
+    "homepage": "https://www.payone.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "PAY/ONE",
+            "email": "integrations@payone.com",
+            "homepage": "https://www.payone.com"
+        }
+    ],
+    "support": {
+        "email": "tech.support@payone.com",
+        "issues": "https://github.com/PAYONE-GmbH/woocommerce-3/issues",
+        "docs": "https://docs.payone.com"
+    },
+    "require": {
+        "php": ">=7.2"
+    },
+    "minimum-stability": "stable"
+}
