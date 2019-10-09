@@ -18,7 +18,8 @@
         "docs": "https://docs.payone.com"
     },
     "require": {
-        "php": ">=7.2"
+        "php": ">=7.2",
+        "vlucas/phpdotenv": "^3.6"
     },
     "minimum-stability": "stable"
 }
