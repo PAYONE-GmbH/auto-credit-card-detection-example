@@ -19,7 +19,13 @@
     },
     "require": {
         "php": ">=7.2",
+        "ext-json": "*",
         "vlucas/phpdotenv": "^3.6"
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Payone\\": "src/"
+        }
+    }
 }
