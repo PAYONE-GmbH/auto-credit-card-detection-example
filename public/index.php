@@ -25,7 +25,7 @@ $payone = new \Payone\Payone([
 <body>
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col py-5">
                 <h1 class="h2">Auto Credit Card Type Detection Example</h1>
 
                 <!-- HTML for displaying CC detection messages. -->
