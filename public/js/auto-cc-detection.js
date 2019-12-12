@@ -1,6 +1,7 @@
 /**
+ * The PAYONE auto card type detection class constructor.
  *
- * @param config
+ * @param config The auto card type detection config.
  * @constructor
  */
 function PayoneAutoCcDetection(config)
@@ -21,9 +22,17 @@ function PayoneAutoCcDetection(config)
     };
 
     // Create hosted IFrames object.
-    this._hostedIframe = new Payone.ClientApi.HostedIFrames(this._config.hostedIframesConfig.config, this._config.hostedIframesConfig.request);
+    this._hostedIframe = new Payone.ClientApi.HostedIFrames(
+        this._config.hostedIframesConfig.config,
+        this._config.hostedIframesConfig.request
+    );
 
     // Register credit card check callback.
+    // The hosted IFrames API expects a callback provided as string,
+    // therefore we cannot use a function value reference directly.
+    // As a workaround we register the actual handler method as global
+    // function with a random unique name which will be provided to the
+    // hosted IFrames API later.
     this._creditCardCheckCallbackName = 'payone_cc_check_callback_' + Math.random().toString().substr(2);
     window[this._creditCardCheckCallbackName] = this._creditCardCheckCallback.bind(this);
 
@@ -32,8 +41,9 @@ function PayoneAutoCcDetection(config)
 }
 
 /**
+ * Returns the card brand icons jQuery element list.
  *
- * @returns {jQuery}
+ * @returns {jQuery} The card brand icons jQuery element list.
  * @private
  */
 PayoneAutoCcDetection.prototype._$icons = function () {
@@ -41,8 +51,9 @@ PayoneAutoCcDetection.prototype._$icons = function () {
 };
 
 /**
+ * Returns the message jQuery element.
  *
- * @returns {jQuery}
+ * @returns {jQuery} The message jQuery element.
  * @private
  */
 PayoneAutoCcDetection.prototype._$msg = function () {
@@ -50,8 +61,10 @@ PayoneAutoCcDetection.prototype._$msg = function () {
 };
 
 /**
+ * Changes the current selected icon in accordance
+ * to the provided type.
  *
- * @param {string} type
+ * @param {string} type The new card type.
  * @private
  */
 PayoneAutoCcDetection.prototype._changeIcon = function (type) {
@@ -61,11 +74,16 @@ PayoneAutoCcDetection.prototype._changeIcon = function (type) {
         .addClass(this._config.iconSelectedClass);
 };
 
+/**
+ * @todo remove
+ * @private
+ */
 PayoneAutoCcDetection.prototype._clearIconSelection = function () {
     this._$icons().removeClass(this._config.iconSelectedClass);
 };
 
 /**
+ * Shows the provided message to the user.
  *
  * @param {string} level The message level.
  * @param {string} message The message text.
@@ -81,18 +99,27 @@ PayoneAutoCcDetection.prototype._showMessage = function (level, message) {
     this._$msg().fadeIn(400);
 };
 
+/**
+ * Hides any visible message.
+ *
+ * @private
+ */
 PayoneAutoCcDetection.prototype._hideMessage = function () {
     this._$msg().fadeOut(200);
 };
 
 /**
+ * Handles automatically detected card types.
+ * This is the handler that will be called by the hosted iFrames API
+ * if a card type detection result is available.
  *
- * @param type
+ * @param {string} type The detection result of the hosted IFrames API.
  * @private
  */
 PayoneAutoCcDetection.prototype._handleDetectionResult = function (type) {
     type = type.toUpperCase();
 
+    // Delegate further processing to dedicated handlers.
     switch (type) {
         case '?':
             this._handleUnknownCardType(type);
@@ -106,6 +133,12 @@ PayoneAutoCcDetection.prototype._handleDetectionResult = function (type) {
     }
 };
 
+/**
+ * Handles detection results of valid card types.
+ *
+ * @param {string} type The detected valid card type.
+ * @private
+ */
 PayoneAutoCcDetection.prototype._handleValidCardType = function (type) {
     this._changeIcon(type);
     this._hideMessage();
@@ -116,13 +149,23 @@ PayoneAutoCcDetection.prototype._handleValidCardType = function (type) {
     }
 };
 
-PayoneAutoCcDetection.prototype._handleUnknownCardType = function (type) {
+/**
+ * Handles unknown card type detection results.
+ *
+ * @private
+ */
+PayoneAutoCcDetection.prototype._handleUnknownCardType = function () {
     this._clearIconSelection();
     this._showMessage('warning', 'The card type cannot be detected automatically. Please specify your card type by clicking the corresponding icon.');
     this._enableManualSelection();
 };
 
-PayoneAutoCcDetection.prototype._handleUnsupportedCardType = function (type) {
+/**
+ * Handles unsupported card type detection results.
+ *
+ * @private
+ */
+PayoneAutoCcDetection.prototype._handleUnsupportedCardType = function () {
     this._clearIconSelection();
     this._showMessage('danger', 'The card type is not supported. Please specify a card type corresponding to the icon brands above.');
 
@@ -132,10 +175,21 @@ PayoneAutoCcDetection.prototype._handleUnsupportedCardType = function (type) {
     }
 };
 
+/**
+ * Renders the credit card check response.
+ *
+ * @param {object} response
+ * @private
+ */
 PayoneAutoCcDetection.prototype._renderResponse = function (response) {
     $('#cc-check-response-wrap pre').html(JSON.stringify(response, null, 2));
 };
 
+/**
+ * Enables the manual selection of credit card types.
+ *
+ * @private
+ */
 PayoneAutoCcDetection.prototype._enableManualSelection = function () {
     var _this = this;
 
@@ -150,6 +204,11 @@ PayoneAutoCcDetection.prototype._enableManualSelection = function () {
         });
 };
 
+/**
+ * Disables the manual selection of credit card types.
+ *
+ * @private
+ */
 PayoneAutoCcDetection.prototype._disableManualSelection = function () {
     this._$icons()
         .removeClass(this._config.iconClickableClass)
@@ -157,8 +216,9 @@ PayoneAutoCcDetection.prototype._disableManualSelection = function () {
 };
 
 /**
+ * Handles the credit card check result.
  *
- * @param response
+ * @param {object} response The credit card check result from the hosted IFrame API.
  * @private
  */
 PayoneAutoCcDetection.prototype._creditCardCheckCallback = function (response) {
@@ -179,7 +239,7 @@ PayoneAutoCcDetection.prototype._creditCardCheckCallback = function (response) {
 };
 
 /**
- *
+ * Performs the credit card check.
  */
 PayoneAutoCcDetection.prototype.performCreditCardCheck = function () {
     if (this._hostedIframe.isComplete()) {
