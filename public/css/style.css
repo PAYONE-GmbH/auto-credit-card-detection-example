@@ -1,0 +1,38 @@
+
+* {
+    box-sizing: content-box;
+}
+
+.payone-cc-message-wrap {
+    display: none;
+}
+
+.payone-cc-icon {
+    margin: 10px;
+    padding: 10px;
+    width: auto;
+    height: 30px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.payone-cc-icon--clickable:hover {
+    cursor: pointer;
+}
+
+.payone-cc-icon--selected {
+    border-color: #0078AB;
+}
+
+.payone-input-mock {
+    border: 2px solid #0078AB;
+    border-radius: 10px;
+    padding: 5px 15px;
+    max-width: 200px;
+}
+
+.payone-input-mock iframe {
+    height: 50px;
+    width: 100%;
+    vertical-align: middle;
+}
