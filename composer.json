@@ -14,8 +14,8 @@
     ],
     "support": {
         "email": "tech.support@payone.com",
-        "issues": "https://github.com/PAYONE-GmbH/woocommerce-3/issues",
-        "docs": "https://docs.payone.com"
+        "issues": "https://github.com/PAYONE-GmbH/auto-credit-card-detection-example/issues",
+        "docs": "https://docs.payone.com/display/public/INT/Modern+Credit+Card+Checkout"
     },
     "require": {
         "php": ">=7.2",
