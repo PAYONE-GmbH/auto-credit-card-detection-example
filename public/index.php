@@ -15,11 +15,13 @@ $payone = new \Payone\Payone([
 <head>
     <title>Auto Credit Card Type Detection</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://secure.pay1.de/client-api/js/v1/payone_hosted.js"></script>
+    <!-- in production, use the minified version of the JS. -->
+    <!-- <script src="https://secure.pay1.de/client-api/js/v1/payone_hosted_min.js"></script> -->
     <script src="js/auto-cc-detection.js"></script>
 </head>
 <body>
@@ -111,7 +113,7 @@ $payone = new \Payone\Payone([
                                 type: "password",
                                 size: "4",
                                 maxlength: "4",
-                                length: { "V": 3, "M": 3 }
+                                length: { "V": 3, "M": 3, "O": 0 }
                             },
                             cardexpiremonth: {
                                 selector: "payone-cc-expire-month",

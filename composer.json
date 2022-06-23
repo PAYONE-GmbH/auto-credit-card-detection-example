@@ -18,7 +18,7 @@
         "docs": "https://docs.payone.com/display/public/INT/Modern+Credit+Card+Checkout"
     },
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-json": "*",
         "vlucas/phpdotenv": "^3.6"
     },
